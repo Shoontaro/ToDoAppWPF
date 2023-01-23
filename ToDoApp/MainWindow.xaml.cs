@@ -46,23 +46,23 @@ namespace ToDoApp
                 Close();
             }
 
-            
-
             dgToDoList.ItemsSource = _ToDoDataList;
+            
             _ToDoDataList.ListChanged += _ToDoDataList_ListChanged;
         }
 
         private void _ToDoDataList_ListChanged(object sender, ListChangedEventArgs e)
         {
-            try
-            {
-                _fileIO.SaveData(sender);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                Close();
-            }
+            if (e.ListChangedType == ListChangedType.ItemAdded || e.ListChangedType == ListChangedType.ItemDeleted || e.ListChangedType == ListChangedType.ItemChanged) {
+                try
+                {
+                    _fileIO.SaveData(sender);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    Close();
+                } }
         }
     }
 }
